@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cami-cavalls-cache-v1.6.0';
+const CACHE_NAME = 'cami-cavalls-cache-v1.7.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
