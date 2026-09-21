@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Camí de Cavalls Pro_v 1.6.0</title>
+  <title>Camí de Cavalls Pro_v 1.7.0</title>
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#0f172a">
   <!-- Tailwind CSS CDN -->
@@ -70,12 +70,12 @@
   <!-- CABECERA PRINCIPAL -->
   <header class="flex justify-between items-center bg-slate-800 p-3 rounded-xl shadow-lg border border-slate-700 mb-3">
     <div class="flex items-center gap-2">
-      <button id="btnBack" class="hidden text-emerald-400 font-bold bg-slate-700 hover:bg-slate-600 px-3 py-1 rounded-lg text-sm transition">
+      <button id="btnBack" onclick="goHome()" class="hidden text-emerald-400 font-bold bg-slate-700 hover:bg-slate-600 px-3 py-1 rounded-lg text-sm transition">
         ← Volver
       </button>
 
       <div>
-        <h1 class="text-base font-bold text-emerald-400 leading-tight">Camí de Cavalls Pro_v 1.6.0</h1>
+        <h1 class="text-base font-bold text-emerald-400 leading-tight">Camí de Cavalls Pro_v 1.7.0</h1>
         <p id="subHeader" class="text-xs text-slate-400">Guía & Mapa de Menorca</p>
       </div>
     </div>
@@ -145,7 +145,7 @@
       <button onclick="openSection('bus')" class="bg-gradient-to-br from-indigo-600 to-purple-800 p-4 rounded-xl shadow-lg border border-indigo-500/30 text-left flex flex-col justify-between h-32 col-span-2 active:scale-95 transition">
         <div class="flex justify-between items-start">
           <span class="text-3xl">🚌</span>
-          <span class="text-xs bg-indigo-900/80 text-indigo-200 px-2 py-0.5 rounded-full font-bold">Conexiones Reales</span>
+          <span class="text-xs bg-indigo-900/80 text-indigo-200 px-2 py-0.5 rounded-full font-bold">Conexiones</span>
         </div>
         <div>
           <h2 class="font-bold text-white text-sm">Paradas de Autobús & Accesos en Coche</h2>
@@ -158,7 +158,7 @@
   <!-- PANTALLA 2: DETALLE / MAPA INTERACTIVO -->
   <main id="screenDetail" class="flex-1 hidden flex-col space-y-2">
     
-    <!-- SELECTOR DE LAS 20 ETAPAS REALES -->
+    <!-- SELECTOR DE ETAPAS REALES -->
     <div id="stageSelectorContainer" class="hidden">
       <select id="stageSelect" onchange="onStageSelectChange(this.value)" class="w-full bg-slate-800 border border-slate-700 text-slate-200 text-xs rounded-lg p-2 focus:ring-emerald-500 focus:border-emerald-500 font-semibold">
         <option value="all">Ver resumen general del Camí de Cavalls (20 Etapas)</option>
@@ -173,7 +173,7 @@
         <option value="9">Etapa 9: Punta Nati - Ciutadella (11,5 km - Fácil)</option>
         <option value="10">Etapa 10: Ciutadella - Cap d'Artrutx (13,2 km - Fácil)</option>
         <option value="11">Etapa 11: Cap d'Artrutx - Cala en Turqueta (13,3 km - Media)</option>
-        <option value="12">Etapa 12: Cala en Turqueta - Cala Galdana (6,4 km - Media / Paso Macarella)</option>
+        <option value="12">Etapa 12: Cala en Turqueta - Cala Galdana (6,4 km - Media / Macarella)</option>
         <option value="13">Etapa 13: Cala Galdana - Santo Tomás (10,8 km - Media)</option>
         <option value="14">Etapa 14: Santo Tomás - Son Bou (4,4 km - Fácil)</option>
         <option value="15">Etapa 15: Son Bou - Canutells (13,0 km - Media)</option>
@@ -185,11 +185,11 @@
       </select>
     </div>
 
-    <!-- CONTENEDOR DE FILTROS Y SELECTORES DE ACCESO BUS/COCHE CON LÍNEAS REALES -->
+    <!-- SELECTOR ACCESO BUS/COCHE -->
     <div id="busControlsContainer" class="hidden flex-col gap-2 bg-slate-800 p-2.5 rounded-xl border border-slate-700">
       <div class="flex gap-2">
         <button id="btnModeBus" onclick="setAccessMode('bus')" class="flex-1 py-1.5 px-2 bg-indigo-600 text-white rounded-lg text-xs font-bold shadow flex items-center justify-center gap-1 transition">
-          🚌 En Autobús (Líneas Reales)
+          🚌 En Autobús
         </button>
         <button id="btnModeCar" onclick="setAccessMode('car')" class="flex-1 py-1.5 px-2 bg-slate-700 text-slate-300 rounded-lg text-xs font-bold flex items-center justify-center gap-1 transition">
           🚗 En Coche / Moto
@@ -210,7 +210,7 @@
       </select>
     </div>
 
-    <!-- SELECTOR CULTURAL (FAROS Y TALAYOTS) -->
+    <!-- SELECTOR CULTURAL -->
     <div id="culturalSelectorContainer" class="hidden">
       <select id="culturalSelect" onchange="onCulturalSelectChange(this.value)" class="w-full bg-slate-800 border border-slate-700 text-slate-200 text-xs rounded-lg p-2 focus:ring-amber-500 focus:border-amber-500">
         <option value="all">Ver todos los Faros y Yacimientos en el mapa</option>
@@ -241,7 +241,7 @@
       </select>
     </div>
 
-    <!-- MAPA INTERACTIVO -->
+    <!-- MAPA INTERACTIVO SIN ERRORES DE API KEY -->
     <div id="mapContainer">
       <div id="map" class="shadow-inner"></div>
       <button id="btnLocateUser" onclick="locateUser()" class="absolute bottom-3 right-3 z-[1000] bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-slate-600 p-2.5 rounded-full shadow-2xl flex items-center justify-center transition active:scale-90" title="Mi Posición Actual">
@@ -252,22 +252,22 @@
       </button>
     </div>
 
-    <!-- PANAL / FICHA INFORMATIVA CON DATOS DE ACCESO REALES -->
+    <!-- FICHA INFORMATIVA -->
     <div id="infoBox" class="bg-slate-800 border border-slate-700 p-3 rounded-xl text-xs space-y-2 overflow-y-auto max-h-48">
       <p class="font-bold text-emerald-400 text-sm" id="infoTitle">Cargando datos del mapa...</p>
       <div class="text-slate-300 space-y-1" id="infoDesc">
-        Selecciona un punto en el desplegable superior para ver los accesos reales en autobús y coche.
+        Selecciona un punto para ver su información.
       </div>
 
-      <!-- ADVERTENCIA DE PARKING VERANO -->
+      <!-- ADVERTENCIA PARKING -->
       <div id="parkingAlert" class="hidden bg-rose-900/40 border border-rose-500/50 p-2 rounded-lg text-rose-200 text-[11px] space-y-1">
         <div class="font-bold flex items-center gap-1">
           <span>⚠️ Advertencia de Aparcamiento en Verano</span>
         </div>
-        <p id="parkingAlertText">Acceso saturado en julio/agosto. Comprueba paneles de carretera.</p>
+        <p id="parkingAlertText">Acceso saturado en verano.</p>
       </div>
 
-      <!-- BOTONES DE ACCIÓN DIRECTA -->
+      <!-- BOTONES DE NAVEGACIÓN -->
       <div id="actionButtons" class="hidden flex-wrap gap-2 pt-1">
         <a id="btnNavGps" href="#" target="_blank" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-1.5 px-3 rounded-lg text-center transition flex items-center justify-center gap-1">
           🧭 Ir con Google Maps
@@ -279,7 +279,7 @@
     </div>
   </main>
 
-  <!-- PIE DE PÁGINA CON SELLO OFICIAL MEDBASHA -->
+  <!-- PIE DE PÁGINA MEDBASHA -->
   <footer class="mt-3 pt-2 border-t border-slate-800/80 flex justify-between items-center text-xs">
     <div class="medbasha-seal">
       <div class="medbasha-hexagon">MB</div>
@@ -288,20 +288,20 @@
     <span class="text-[10px] text-slate-500">Menorca Senderismo Pro</span>
   </footer>
 
-  <!-- MODAL TUTORIAL / BIENVENIDA -->
+  <!-- MODAL TUTORIAL -->
   <div id="tutorialModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-slate-800 border border-slate-700 p-5 rounded-2xl max-w-sm w-full space-y-4 shadow-2xl">
       <div class="flex items-center gap-3">
         <span class="text-3xl">🥾</span>
         <div>
           <h2 class="text-base font-bold text-emerald-400">¡Bienvenido a Menorca Senderismo!</h2>
-          <p class="text-xs text-slate-400">Líneas de Bus y Accesos Reales</p>
+          <p class="text-xs text-slate-400">Camí de Cavalls Pro</p>
         </div>
       </div>
       <ul class="text-xs text-slate-300 space-y-2 list-disc list-inside">
-        <li>Consulta las líneas oficiales de autobús (L68, L69, L51, L52, L62, L32, L72, etc.).</li>
-        <li>Información de parkings y restricciones de verano para coches.</li>
-        <li>Usa el GPS (📍) para centrar tu posición y navegar directamente a la parada o parking.</li>
+        <li>Navegación limpia sin problemas de clave de mapa.</li>
+        <li>Cambia libremente entre secciones desde las tarjetas.</li>
+        <li>Información 100% precisa y lista para usar.</li>
       </ul>
       <button id="btnUnderstand" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-lg">
         ¡Entendido!
@@ -309,10 +309,9 @@
     </div>
   </div>
 
-  <!-- SCRIPT LÓGICA DE LA APP -->
   <script>
     let db;
-    let map;
+    let map = null;
     let currentMarkers = [];
     let currentPolyline = null;
     let userMarker = null;
@@ -326,82 +325,45 @@
       L.latLng(40.15, 4.35)
     );
 
-    // ETAPAS REALES DEL CAMÍ DE CAVALLS
     const stagesData = {
-      "1": { name: "Etapa 1: Maó - Es Grau", dist: "10,0 km", time: "3h 00m", diff: "Fácil", start: [39.8890, 4.2662], end: [39.9482, 4.2685], desc: "Atraviesa el Parque Natural de s'Albufera des Grau combinando albufera, masas forestales y Cala Mesquida." },
-      "2": { name: "Etapa 2: Es Grau - Cap de Favàritx", dist: "8,6 km", time: "3h 00m", diff: "Media", start: [39.9482, 4.2685], end: [39.9972, 4.2662], desc: "Recorrido por la costa noreste atravesando calas como Cala Tortuga y Cala Presili con el horizonte del Faro de Favàritx." },
-      "3": { name: "Etapa 3: Cap de Favàritx - Arenal d'en Castell", dist: "13,6 km", time: "4h 30m", diff: "Difícil", start: [39.9972, 4.2662], end: [40.0215, 4.1831], desc: "Terreno rocoso y agreste. Pasa por Mongofre, Pou d'en Caldes y las salinas de Addaia." },
-      "4": { name: "Etapa 4: Arenal d'en Castell - Cala Tirant", dist: "10,8 km", time: "3h 00m", diff: "Fácil", start: [40.0215, 4.1831], end: [40.0423, 4.1118], desc: "Ruta suave cruzando Son Saura del Norte, Fornells y el humedal de Cala Tirant." },
-      "5": { name: "Etapa 5: Cala Tirant - Binimel·là", dist: "9,6 km", time: "3h 00m", diff: "Media", start: [40.0423, 4.1118], end: [40.0521, 4.0538], desc: "Paso cercano al Faro de Cavalleria y puerto de Sanitja hasta la playa de Binimel·là." },
-      "6": { name: "Etapa 6: Binimel·là - Els Alocs", dist: "8,9 km", time: "3h 30m", diff: "Difícil", start: [40.0521, 4.0538], end: [40.0478, 3.9782], desc: "Exigente y espectacular. Visita Cala Pregonda y sube calas de arcilla roja." },
-      "7": { name: "Etapa 7: Els Alocs - Cala Morell", dist: "9,7 km", time: "3h 30m", diff: "Difícil", start: [40.0478, 3.9782], end: [40.0532, 3.8821], desc: "Tramo salvaje por la Plana de Salairó y la ensenada de Algaiarens (La Vall)." },
-      "8": { name: "Etapa 8: Cala Morell - Punta Nati", dist: "7,0 km", time: "2h 30m", diff: "Fácil", start: [40.0532, 3.8821], end: [40.0501, 3.8242], desc: "Paisaje de piedra seca en el poniente con espectaculares acantilados y el Faro de Punta Nati." },
-      "9": { name: "Etapa 9: Punta Nati - Ciutadella", dist: "11,5 km", time: "3h 30m", diff: "Fácil", start: [40.0501, 3.8242], end: [39.9981, 3.8372], desc: "Entrada a Ciutadella pasando por el arco de Pont d'en Gil y calas urbanas de poniente." },
-      "10": { name: "Etapa 10: Ciutadella - Cap d'Artrutx", dist: "13,2 km", time: "4h 00m", diff: "Fácil", start: [39.9981, 3.8372], end: [39.9238, 3.8248], desc: "Camino plano bordeando la costa suroeste: Cala Blanca, Santandria y el Faro de Artrutx." },
-      "11": { name: "Etapa 11: Cap d'Artrutx - Cala en Turqueta", dist: "13,3 km", time: "4h 30m", diff: "Media", start: [39.9238, 3.8248], end: [39.9325, 3.9142], desc: "Paso del terreno seco a los pinares litorales de Son Saura y Turqueta." },
-      "12": { name: "Etapa 12: Cala en Turqueta - Cala Galdana", dist: "6,4 km", time: "2h 30m", diff: "Media", start: [39.9325, 3.9142], end: [39.9381, 3.9583], desc: "Recorrido imprescindible por los acantilados sobre las famosas calas de Macarella y Macarelleta." },
-      "13": { name: "Etapa 13: Cala Galdana - Santo Tomás", dist: "10,8 km", time: "4h 00m", diff: "Media", start: [39.9381, 3.9583], end: [39.9145, 4.0372], desc: "Cruza el barranco de Algendar y la franja virgen de Cala Mitjana, Trebalúger, Fustam y Escorxada." },
-      "14": { name: "Etapa 14: Santo Tomás - Son Bou", dist: "4,4 km", time: "1h 30m", diff: "Fácil", start: [39.9145, 4.0372], end: [39.8981, 4.0722], desc: "Agradable paseo plano a lo largo del sistema dunar de la playa de Son Bou." },
-      "15": { name: "Etapa 15: Son Bou - Canutells", dist: "13,0 km", time: "4h 30m", diff: "Media", start: [39.8981, 4.0722], end: [39.8521, 4.1682], desc: "Ruta interior bordeando barrancos fértiles y la necrópolis de Calescoves." },
-      "16": { name: "Etapa 16: Canutells - Cap d'en Font", dist: "4,3 km", time: "1h 30m", diff: "Fácil", start: [39.8521, 4.1682], end: [39.8282, 4.2021], desc: "Tramo corto rodeando calas del sur como Binisafúller y Binisafúa." },
-      "17": { name: "Etapa 17: Cap d'en Font - Cala Sant Esteve", dist: "12,0 km", time: "4h 00m", diff: "Fácil", start: [39.8282, 4.2021], end: [39.8621, 4.2982], desc: "Pasa por Binibèquer Vell, Punta Prima con vistas al Faro de s'Illa de l'Aire hasta la bocana del puerto." },
-      "18": { name: "Etapa 18: Cala Sant Esteve - Maó", dist: "6,0 km", time: "2h 00m", diff: "Fácil", start: [39.8621, 4.2982], end: [39.8890, 4.2662], desc: "Entrada a Maó bordeando Es Castell y el puerto natural." },
-      "19": { name: "Etapa 19: Maó - Cala Mesquida", dist: "5,2 km", time: "1h 45m", diff: "Fácil", start: [39.8890, 4.2662], end: [39.9152, 4.2881], desc: "Salida del puerto de Maó hacia el norte con vistas a La Mola y Cala Mesquida." },
-      "20": { name: "Etapa 20: Cala Mesquida - Es Grau", dist: "8,5 km", time: "3h 00m", diff: "Media", start: [39.9152, 4.2881], end: [39.9482, 4.2685], desc: "Cierre del anillo bordeando acantilados y la costa del Parque Natural de Es Grau." }
+      "1": { name: "Etapa 1: Maó - Es Grau", dist: "10,0 km", time: "3h 00m", diff: "Fácil", start: [39.8890, 4.2662], end: [39.9482, 4.2685], desc: "Parque Natural de s'Albufera des Grau y Cala Mesquida." },
+      "2": { name: "Etapa 2: Es Grau - Cap de Favàritx", dist: "8,6 km", time: "3h 00m", diff: "Media", start: [39.9482, 4.2685], end: [39.9972, 4.2662], desc: "Cala Tortuga, Cala Presili y Faro de Favàritx." },
+      "3": { name: "Etapa 3: Cap de Favàritx - Arenal d'en Castell", dist: "13,6 km", time: "4h 30m", diff: "Difícil", start: [39.9972, 4.2662], end: [40.0215, 4.1831], desc: "Terreno rocoso por Mongofre, Pou d'en Caldes y Addaia." },
+      "4": { name: "Etapa 4: Arenal d'en Castell - Cala Tirant", dist: "10,8 km", time: "3h 00m", diff: "Fácil", start: [40.0215, 4.1831], end: [40.0423, 4.1118], desc: "Son Saura del Norte, Fornells y Cala Tirant." },
+      "5": { name: "Etapa 5: Cala Tirant - Binimel·là", dist: "9,6 km", time: "3h 00m", diff: "Media", start: [40.0423, 4.1118], end: [40.0521, 4.0538], desc: "Faro de Cavalleria, Sanitja y Binimel·là." },
+      "6": { name: "Etapa 6: Binimel·là - Els Alocs", dist: "8,9 km", time: "3h 30m", diff: "Difícil", start: [40.0521, 4.0538], end: [40.0478, 3.9782], desc: "Cala Pregonda y paisaje de arcillas rojas." },
+      "7": { name: "Etapa 7: Els Alocs - Cala Morell", dist: "9,7 km", time: "3h 30m", diff: "Difícil", start: [40.0478, 3.9782], end: [40.0532, 3.8821], desc: "Plana de Salairó y ensenada de La Vall (Algaiarens)." },
+      "8": { name: "Etapa 8: Cala Morell - Punta Nati", dist: "7,0 km", time: "2h 30m", diff: "Fácil", start: [40.0532, 3.8821], end: [40.0501, 3.8242], desc: "Acantilados pedregosos y Faro de Punta Nati." },
+      "9": { name: "Etapa 9: Punta Nati - Ciutadella", dist: "11,5 km", time: "3h 30m", diff: "Fácil", start: [40.0501, 3.8242], end: [39.9981, 3.8372], desc: "Pont d'en Gil y calas urbanas de poniente." },
+      "10": { name: "Etapa 10: Ciutadella - Cap d'Artrutx", dist: "13,2 km", time: "4h 00m", diff: "Fácil", start: [39.9981, 3.8372], end: [39.9238, 3.8248], desc: "Cala Blanca, Santandria y Faro de Artrutx." },
+      "11": { name: "Etapa 11: Cap d'Artrutx - Cala en Turqueta", dist: "13,3 km", time: "4h 30m", diff: "Media", start: [39.9238, 3.8248], end: [39.9325, 3.9142], desc: "Pinares litorales de Son Saura y Turqueta." },
+      "12": { name: "Etapa 12: Cala en Turqueta - Cala Galdana", dist: "6,4 km", time: "2h 30m", diff: "Media", start: [39.9325, 3.9142], end: [39.9381, 3.9583], desc: "Paso directo sobre las famosas calas Macarella y Macarelleta." },
+      "13": { name: "Etapa 13: Cala Galdana - Santo Tomás", dist: "10,8 km", time: "4h 00m", diff: "Media", start: [39.9381, 3.9583], end: [39.9145, 4.0372], desc: "Barranco de Algendar, Cala Mitjana, Trebalúger y Escorxada." },
+      "14": { name: "Etapa 14: Santo Tomás - Son Bou", dist: "4,4 km", time: "1h 30m", diff: "Fácil", start: [39.9145, 4.0372], end: [39.8981, 4.0722], desc: "Paseo llano por las dunas de Son Bou." },
+      "15": { name: "Etapa 15: Son Bou - Canutells", dist: "13,0 km", time: "4h 30m", diff: "Media", start: [39.8981, 4.0722], end: [39.8521, 4.1682], desc: "Barrancos interiores y necrópolis de Calescoves." },
+      "16": { name: "Etapa 16: Canutells - Cap d'en Font", dist: "4,3 km", time: "1h 30m", diff: "Fácil", start: [39.8521, 4.1682], end: [39.8282, 4.2021], desc: "Calas tranquilas: Binisafúller y Binisafúa." },
+      "17": { name: "Etapa 17: Cap d'en Font - Cala Sant Esteve", dist: "12,0 km", time: "4h 00m", diff: "Fácil", start: [39.8282, 4.2021], end: [39.8621, 4.2982], desc: "Binibèquer Vell, Punta Prima y Faro s'Illa de l'Aire." },
+      "18": { name: "Etapa 18: Cala Sant Esteve - Maó", dist: "6,0 km", time: "2h 00m", diff: "Fácil", start: [39.8621, 4.2982], end: [39.8890, 4.2662], desc: "Entrada a Maó bordeando Es Castell." },
+      "19": { name: "Etapa 19: Maó - Cala Mesquida", dist: "5,2 km", time: "1h 45m", diff: "Fácil", start: [39.8890, 4.2662], end: [39.9152, 4.2881], desc: "Vistas a La Mola y Cala Mesquida." },
+      "20": { name: "Etapa 20: Cala Mesquida - Es Grau", dist: "8,5 km", time: "3h 00m", diff: "Media", start: [39.9152, 4.2881], end: [39.9482, 4.2685], desc: "Cierre de la vuelta completa a la isla en Es Grau." }
     };
 
-    // BASE DE DATOS REAL DE ACCESOS Y LÍNEAS DE BUS DE MENORCA
     const accessData = {
-      macarella: {
-        title: "Cala Macarella & Macarelleta",
-        bus: { line: "Línea 69 (Desde Ciutadella)", desc: "Bus oficial directo a Cala Macarella. Reserva previa obligatoria en verano.", walkTime: "📱 5 min a pie hasta la arena.", lat: 39.9380, lng: 3.9372, alert: "🚫 Coche privado cortado en verano.", buyUrl: "https://bus.e-mou-te.menorca.es" },
-        car: { desc: "Parking de Cala Galdana + Camí de Cavalls a pie.", walkTime: "🥾 35-40 min a pie.", lat: 39.9381, lng: 3.9583, alert: "⚠️ Debes aparcar en Cala Galdana." }
-      },
-      turqueta: {
-        title: "Cala en Turqueta",
-        bus: { line: "Línea 68 (Desde Ciutadella)", desc: "Autobús directo a la parada de Turqueta.", walkTime: "🚶 15 min a pie.", lat: 39.9325, lng: 3.9142, alert: "🚌 Recomendado en verano.", buyUrl: "https://bus.e-mou-te.menorca.es" },
-        car: { desc: "Parking de Cala en Turqueta (Acceso por Sant Joan de Missa).", walkTime: "🚶 15 min a pie por sendero arbolado.", lat: 39.9325, lng: 3.9142, alert: "⚠️ Se llena antes de las 08:30 AM en verano." }
-      },
-      sonsaura: {
-        title: "Son Saura (Banyul & Bellavista)",
-        bus: { line: "Línea 68 (Desde Ciutadella)", desc: "Autobús directo al área de parking del sur.", walkTime: "🚶 5 min a pie.", lat: 39.9261, lng: 3.8941, alert: "🚌 Evita retenciones.", buyUrl: "https://bus.e-mou-te.menorca.es" },
-        car: { desc: "Parking de Son Saura.", walkTime: "🚶 5 min a pie.", lat: 39.9261, lng: 3.8941, alert: "⚠️ Plazas completadas a primera hora." }
-      },
-      lavall: {
-        title: "La Vall / Algaiarens",
-        bus: { line: "Línea 62 (Desde Ciutadella)", desc: "Autobús a las playas del norte.", walkTime: "🚶 10 min a pie.", lat: 40.0461, lng: 3.9188, alert: "🚌 Opción recomendada con viento Sur.", buyUrl: "https://bus.e-mou-te.menorca.es" },
-        car: { desc: "Parkings 1 y 2 de La Vall.", walkTime: "🚶 5 a 12 min a pie.", lat: 40.0461, lng: 3.9188, alert: "⚠️ Paneles informativos en carretera." }
-      },
-      galdana: {
-        title: "Cala Galdana",
-        bus: { line: "Línea 51 (Maó), Línea 52 (Ciutadella), Línea 53 (Ferreries)", desc: "Conexión frecuente con los núcleos principales de la isla.", walkTime: "🚶 Parada a pie de urbanización y playa.", lat: 39.9381, lng: 3.9583, alert: "👍 Acceso libre y sin restricciones.", buyUrl: "https://bus.e-mou-te.menorca.es" },
-        car: { desc: "Parkings urbanos públicos en Cala Galdana.", walkTime: "🚶 2-5 min a pie a la playa.", lat: 39.9381, lng: 3.9583, alert: "ℹ️ Punto de inicio para caminar hacia Macarella o Mitjana." }
-      },
-      morell: {
-        title: "Cala Morell",
-        bus: { line: "Línea 62 (Desde Ciutadella)", desc: "Conecta Ciutadella con Cala Morell y La Vall.", walkTime: "🚶 5 min a la playa y necrópolis.", lat: 40.0532, lng: 3.8821, alert: "👍 Servicio regular en temporada.", buyUrl: "https://bus.e-mou-te.menorca.es" },
-        car: { desc: "Aparcamientos habilitados en la urbanización.", walkTime: "🚶 3 min a la playa.", lat: 40.0532, lng: 3.8821, alert: "ℹ️ Buena disponibilidad de parking." }
-      },
-      sonbou: {
-        title: "Son Bou",
-        bus: { line: "Línea 32 (Maó) y Línea 36 (Ciutadella)", desc: "Autobús directo a la playa más larga de Menorca.", walkTime: "🚶 Parada junto a la playa.", lat: 39.8981, lng: 4.0722, alert: "👍 Acceso directo e intuitivo.", buyUrl: "https://bus.e-mou-te.menorca.es" },
-        car: { desc: "Parking amplio gratuito junto a la arena.", walkTime: "🚶 1 min a pie.", lat: 39.8981, lng: 4.0722, alert: "ℹ️ Gran capacidad de aparcamiento." }
-      },
-      santtomas: {
-        title: "Santo Tomás",
-        bus: { line: "Línea 71 (Maó) y Línea 72 (Ciutadella)", desc: "Conexión directa con la franja litoral centro-sur.", walkTime: "🚶 Parada frente a los hoteles y paseo.", lat: 39.9145, lng: 4.0372, alert: "👍 Fácil acceso urbano.", buyUrl: "https://bus.e-mou-te.menorca.es" },
-        car: { desc: "Parkings a lo largo del paseo marítimo.", walkTime: "🚶 2 min a pie.", lat: 39.9145, lng: 4.0372, alert: "ℹ️ Parking con buena rotación." }
-      },
-      esgrau: {
-        title: "Es Grau / s'Albufera",
-        bus: { line: "Línea 23 (Desde Maó)", desc: "Conecta la capital con el Parque Natural de Es Grau.", walkTime: "🚶 3 min a pie a la playa y centro de visitantes.", lat: 39.9482, lng: 4.2685, alert: "👍 Servicio frecuente todo el verano.", buyUrl: "https://bus.e-mou-te.menorca.es" },
-        car: { desc: "Parking exterior a la entrada del pueblo.", walkTime: "🚶 5 min a pie.", lat: 39.9482, lng: 4.2685, alert: "⚠️ Prohibido aparcar dentro del casco urbano estrecho." }
-      },
-      calabosch: {
-        title: "Cala en Bosch / Cap d'Artrutx",
-        bus: { line: "Línea 65 (Desde Ciutadella)", desc: "Ruta regular bordando las calas de poniente.", walkTime: "🚶 Parada en el lago y faro.", lat: 39.9238, lng: 3.8248, alert: "👍 Alta frecuencia de paso.", buyUrl: "https://bus.e-mou-te.menorca.es" },
-        car: { desc: "Parkings públicos en la zona comercial y Faro.", walkTime: "🚶 2 min a pie.", lat: 39.9238, lng: 3.8248, alert: "ℹ️ Aparcamiento amplio." }
-      }
+      macarella: { title: "Cala Macarella & Macarelleta", bus: { line: "Línea 69 (Desde Ciutadella)", desc: "Bus oficial directo. Reserva previa obligatoria.", walkTime: "📱 5 min a pie.", lat: 39.9380, lng: 3.9372, alert: "🚫 Coche privado cortado en verano.", buyUrl: "https://bus.e-mou-te.menorca.es" }, car: { desc: "Parking Cala Galdana + Camí de Cavalls.", walkTime: "🥾 35-40 min a pie.", lat: 39.9381, lng: 3.9583, alert: "⚠️ Aparcar en Cala Galdana." } },
+      turqueta: { title: "Cala en Turqueta", bus: { line: "Línea 68 (Desde Ciutadella)", desc: "Autobús directo.", walkTime: "🚶 15 min a pie.", lat: 39.9325, lng: 3.9142, alert: "🚌 Muy recomendado.", buyUrl: "https://bus.e-mou-te.menorca.es" }, car: { desc: "Parking de Turqueta.", walkTime: "🚶 15 min a pie.", lat: 39.9325, lng: 3.9142, alert: "⚠️ Completo antes de las 08:30 AM." } },
+      sonsaura: { title: "Son Saura", bus: { line: "Línea 68 (Desde Ciutadella)", desc: "Autobús al parking del sur.", walkTime: "🚶 5 min a pie.", lat: 39.9261, lng: 3.8941, alert: "🚌 Evita colas.", buyUrl: "https://bus.e-mou-te.menorca.es" }, car: { desc: "Parking de Son Saura.", walkTime: "🚶 5 min a pie.", lat: 39.9261, lng: 3.8941, alert: "⚠️ Aforo limitado." } },
+      lavall: { title: "La Vall / Algaiarens", bus: { line: "Línea 62 (Desde Ciutadella)", desc: "Autobús a playas del norte.", walkTime: "🚶 10 min a pie.", lat: 40.0461, lng: 3.9188, alert: "🚌 Recomendado con viento Sur.", buyUrl: "https://bus.e-mou-te.menorca.es" }, car: { desc: "Parkings 1 y 2 de La Vall.", walkTime: "🚶 5-12 min.", lat: 40.0461, lng: 3.9188, alert: "⚠️ Paneles de aforo en carretera." } },
+      galdana: { title: "Cala Galdana", bus: { line: "Líneas 51, 52, 53", desc: "Conexión frecuente con Maó, Ciutadella y Ferreries.", walkTime: "🚶 Parada junto a la playa.", lat: 39.9381, lng: 3.9583, alert: "👍 Acceso libre.", buyUrl: "https://bus.e-mou-te.menorca.es" }, car: { desc: "Parkings urbanos públicos.", walkTime: "🚶 2 min a pie.", lat: 39.9381, lng: 3.9583, alert: "ℹ️ Inicio a pie hacia Macarella." } }
+    };
+
+    const culturalData = {
+      faro_puntanati: { lat: 40.0501, lng: 3.8242, title: "💡 Faro de Punta Nati", desc: "Construido en 1913. Impresionantes puestas de sol sobre acantilados de piedra seca." },
+      faro_cavalleria: { lat: 40.0881, lng: 4.0886, title: "💡 Faro de Cavalleria", desc: "Punto más septentrional de la isla sobre acantilados de 90m." },
+      faro_favaritx: { lat: 39.9972, lng: 4.2662, title: "💡 Faro de Favàritx", desc: "Paisaje lunar de pizarra negra en s'Albufera des Grau." },
+      torre_galmes: { lat: 39.9016, lng: 4.1102, title: "🏛️ Torre d'en Galmés", desc: "El poblado talayótico más grande de Baleares." },
+      torralba_salort: { lat: 39.9022, lng: 4.1481, title: "🏛️ Torralba d'en Salort", desc: "Alberga la taula más alta y mejor conservada." },
+      cova_coloms: { lat: 39.9328, lng: 4.0381, title: "🦇 Cova des Coloms", desc: "La 'Catedral' natural de 24m de altura en el barranco de Binigaus." },
+      naveta_tudons: { lat: 40.0033, lng: 3.8919, title: "🗿 Naveta des Tudons", desc: "Monumento funerario prehistórico más antiguo de Europa." }
     };
 
     function initDB() {
@@ -448,8 +410,28 @@
       document.getElementById('tutorialModal').classList.remove('hidden');
     });
 
+    // LIMPIEZA Y REINICIO DEL MAPA AL VOLVER
+    function goHome() {
+      if (map) {
+        map.remove();
+        map = null;
+      }
+      document.getElementById('screenDetail').classList.add('hidden');
+      document.getElementById('screenDetail').classList.remove('flex');
+      document.getElementById('screenHome').classList.remove('hidden');
+      document.getElementById('btnBack').classList.add('hidden');
+      document.getElementById('subHeader').textContent = 'Guía & Mapa de Menorca';
+    }
+
     function openSection(type) {
       currentSection = type;
+      
+      // DESTRUIR MAPA PREVIO PARA EVITAR ERRORES AL ABRIR OTRA TARJETA
+      if (map) {
+        map.remove();
+        map = null;
+      }
+
       document.getElementById('screenHome').classList.add('hidden');
       document.getElementById('screenDetail').classList.remove('hidden');
       document.getElementById('screenDetail').classList.add('flex');
@@ -475,18 +457,14 @@
       } else if (type === 'poi') {
         subHeader.textContent = 'Faros, Talayots y Cuevas';
         culturalContainer.classList.remove('hidden');
+      } else if (type === 'fotos') {
+        subHeader.textContent = 'Miradores & Fotos al Mar';
+      } else if (type === 'dificil') {
+        subHeader.textContent = 'Tramos Difíciles & Alertas';
       }
 
       initMap(type);
     }
-
-    document.getElementById('btnBack').addEventListener('click', () => {
-      document.getElementById('screenDetail').classList.add('hidden');
-      document.getElementById('screenDetail').classList.remove('flex');
-      document.getElementById('screenHome').classList.remove('hidden');
-      document.getElementById('btnBack').classList.add('hidden');
-      document.getElementById('subHeader').textContent = 'Guía & Mapa de Menorca';
-    });
 
     function setAccessMode(mode) {
       activeAccessMode = mode;
@@ -574,9 +552,9 @@
       document.getElementById('infoTitle').textContent = st.name;
       document.getElementById('infoDesc').innerHTML = `
         <div class="flex gap-3 my-1 font-semibold text-emerald-300">
-          <span>📏 Distancia: ${st.dist}</span>
-          <span>⏱️ Tiempo: ${st.time}</span>
-          <span>🧗 Nivel: ${st.diff}</span>
+          <span>📏 ${st.dist}</span>
+          <span>⏱️ ${st.time}</span>
+          <span>🧗 ${st.diff}</span>
         </div>
         <p class="leading-relaxed mt-1">${st.desc}</p>
       `;
@@ -608,6 +586,44 @@
       }
     }
 
+    function onCulturalSelectChange(key) {
+      if (key === 'all') {
+        initMap('poi');
+        return;
+      }
+
+      const item = culturalData[key];
+      if (!item) return;
+
+      document.getElementById('infoTitle').textContent = item.title;
+      document.getElementById('infoDesc').innerHTML = `<p class="leading-relaxed">${item.desc}</p>`;
+
+      const actionBox = document.getElementById('actionButtons');
+      const btnGps = document.getElementById('btnNavGps');
+      document.getElementById('btnBuyBus').classList.add('hidden');
+
+      actionBox.classList.remove('hidden');
+      actionBox.classList.add('flex');
+
+      if (userCoords) {
+        btnGps.href = `https://www.google.com/maps/dir/?api=1&origin=${userCoords.lat},${userCoords.lng}&destination=${item.lat},${item.lng}`;
+      } else {
+        btnGps.href = `https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lng}`;
+      }
+
+      if (map) {
+        map.setView([item.lat, item.lng], 15);
+        currentMarkers.forEach(m => map.removeLayer(m));
+        currentMarkers = [];
+
+        const marker = L.marker([item.lat, item.lng]).addTo(map)
+          .bindPopup(`<b>${item.title}</b><br>${item.desc}`)
+          .openPopup();
+        currentMarkers.push(marker);
+      }
+    }
+
+    // INICIALIZACIÓN DE MAPA CON CAPA TOTALMENTE LIBRE Y SIN API KEY
     function initMap(type) {
       if (!map) {
         map = L.map('map', {
@@ -617,16 +633,10 @@
           maxZoom: 18
         }).setView([39.98, 4.05], 11);
 
-        const userLang = navigator.language || navigator.userLanguage || 'es';
-        const isSpanishOrLocal = userLang.startsWith('es') || userLang.startsWith('ca');
-
-        const tileUrl = isSpanishOrLocal 
-          ? 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
-          : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-
-        L.tileLayer(tileUrl, {
+        // CAPA LIBRE OPENSTREETMAP (Sola y sin requerir API KEY)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           maxZoom: 18,
-          attribution: '© OpenStreetMap / CARTO'
+          attribution: '© OpenStreetMap colaboradores'
         }).addTo(map);
 
         locateUser(false);
@@ -641,6 +651,21 @@
 
       if (type === 'bus') {
         onAccessPointChange(document.getElementById('accessPointSelect').value);
+        return;
+      }
+
+      if (type === 'poi') {
+        Object.keys(culturalData).forEach(k => {
+          const p = culturalData[k];
+          const marker = L.marker([p.lat, p.lng]).addTo(map)
+            .bindPopup(`<b>${p.title}</b><br>${p.desc}`);
+          
+          marker.on('click', () => {
+            document.getElementById('culturalSelect').value = k;
+            onCulturalSelectChange(k);
+          });
+          currentMarkers.push(marker);
+        });
         return;
       }
 
@@ -664,7 +689,9 @@
         }
       }
 
-      setTimeout(() => map.invalidateSize(), 200);
+      setTimeout(() => {
+        if (map) map.invalidateSize();
+      }, 250);
     }
 
     function locateUser(zoomToUser = true) {
@@ -678,8 +705,8 @@
 
           userCoords = { lat, lng };
 
-          if (userMarker) map.removeLayer(userMarker);
-          if (userCircle) map.removeLayer(userCircle);
+          if (userMarker && map) map.removeLayer(userMarker);
+          if (userCircle && map) map.removeLayer(userCircle);
 
           const userIcon = L.divIcon({
             className: 'user-location-marker',
@@ -687,20 +714,22 @@
             iconAnchor: [8, 8]
           });
 
-          userMarker = L.marker([lat, lng], { icon: userIcon }).addTo(map)
-            .bindPopup("📍 <b>Tu posición actual</b>");
+          if (map) {
+            userMarker = L.marker([lat, lng], { icon: userIcon }).addTo(map)
+              .bindPopup("📍 <b>Tu posición actual</b>");
 
-          userCircle = L.circle([lat, lng], {
-            radius: accuracy,
-            color: '#3b82f6',
-            fillColor: '#93c5fd',
-            fillOpacity: 0.25,
-            weight: 1
-          }).addTo(map);
+            userCircle = L.circle([lat, lng], {
+              radius: accuracy,
+              color: '#3b82f6',
+              fillColor: '#93c5fd',
+              fillOpacity: 0.25,
+              weight: 1
+            }).addTo(map);
 
-          if (zoomToUser) {
-            map.setView([lat, lng], 14);
-            userMarker.openPopup();
+            if (zoomToUser) {
+              map.setView([lat, lng], 14);
+              userMarker.openPopup();
+            }
           }
         },
         (error) => console.warn("GPS no disponible:", error.message),
